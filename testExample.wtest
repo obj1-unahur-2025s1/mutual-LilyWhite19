@@ -1,9 +1,51 @@
-import example.pepita
+import example.*
 
-describe "group of tests for pepita" {
+describe "test de las Actividades" {
+  const trekking1 = new SalidaDeTrekking(idiomas = #{"ingles"}, kilometros = 100, diasDeSol = 130)
+  const trekking2 = new SalidaDeTrekking(idiomas = #{"ingles"}, kilometros = 50, diasDeSol = 240)
+  const trekking3 = new SalidaDeTrekking(idiomas = #{"ingles"}, kilometros = 250, diasDeSol = 130)
+  const playa1 = new ViajeDePlaya(idiomas = #{"jeringozo"}, largo = 1000)
+  const playa2 = new ViajeDePlaya(idiomas = #{"jeringozo"}, largo = 2000)
+  const gym1 = new ClaseDeGimnasia()
+  const roque = new Socio(maximoDeActividades = 2)
 
-  test "pepita has initial energy" {
-    assert.equals(100, pepita.energy())
+  method initialize(){
+    roque.realizarActividad(playa1)
+    roque.realizarActividad(playa2)
   }
-
+  test "el viaje de treKking1 lleva 2 dias" {
+    assert.equals(2, trekking1.diasDeActividad())
+  }
+  test "el viaje de trekking1 implica esfiuerzo"{
+    assert.that(trekking1.implicaEsfuerzo())
+  }
+  test "el viaje de trekking1 no sirve para broncearse"{
+    assert.notThat(trekking1.sirveParaBroncearse())
+  }
+  test "el viaje de treKking2 lleva 1 dias" {
+    assert.equals(1, trekking2.diasDeActividad())
+  }
+  test "el viaje de trekking2 no implica esfiuerzo"{
+    assert.notThat(trekking2.implicaEsfuerzo())
+  }
+  test "el viaje de trekking2 sirve para broncearse"{
+    assert.that(trekking2.sirveParaBroncearse())
+  }test "el viaje de treKking3 lleva 5 dias" {
+    assert.equals(5, trekking3.diasDeActividad())
+  }
+  test "el viaje de trekking3 implica esfiuerzo"{
+    assert.that(trekking3.implicaEsfuerzo())
+  }
+  test "el viaje de trekking3 sirve para broncearse"{
+    assert.that(trekking3.sirveParaBroncearse())
+  }
+  test "roque es un adorador al sol"{
+    assert.that(roque.esAdoradorDelSol())
+  }
+  test "roque solo realizo un actividad de esfuerzo"{
+    assert.equals([playa2], roque.actividadesEsforzadas())
+  }
+  test "roque quiere realizar una clase de gimnasion y no puede"{
+    assert.throwsExceptionWithMessage("el socio ya realizo el maximo de actividades", {roque.realizarActividad(gym1)})
+  }
 }
